@@ -1,0 +1,29 @@
+### Variabili (opzionali)
+@url = http://localhost:8080/api/libri
+
+### Chiamata POST per creare un libro
+POST {{url}}
+Content-Type: application/json
+[
+{
+  "title": "Il Nome della Rosa",
+  "author": "Umberto Eco",
+  "genre": "Storico",
+  "isRead": true
+},
+{
+  "title": "Il Nome della Margherita",
+  "author": "Umberto Eco",
+  "genre": "Storico",
+  "isRead": true
+},
+{
+  "title": "Il Nome della Viola",
+  "author": "Umberto Eco",
+  "genre": "Storico",
+  "isRead": true
+}
+]
+
+### Chiamata GET per verificare
+GET {{url}}
