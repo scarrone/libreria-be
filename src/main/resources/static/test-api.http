@@ -4,6 +4,7 @@
 ### Chiamata POST per creare un libro
 POST {{url}}
 Content-Type: application/json
+
 [
 {
   "title": "Il Nome della Rosa",
