@@ -1,6 +1,9 @@
 ### Variabili (opzionali)
 @url = http://localhost:8080/api/libri
 
+### Chiamata GET per verificare
+GET {{url}}
+
 ### Chiamata POST per creare un libro
 POST {{url}}
 Content-Type: application/json
@@ -22,9 +25,19 @@ Content-Type: application/json
   "title": "Il Nome della Viola",
   "author": "Umberto Eco",
   "genre": "Storico",
-  "isRead": true
+  "isRead": false
 }
 ]
 
-### Chiamata GET per verificare
-GET {{url}}
+### Chiamata patch per modificare un libro
+PATCH {{url}}/1
+Content-Type: application/json
+
+{
+  "title": "Il Nome della Santa",
+  "author": "Patrizio Eco",
+  "genre": "Fantasy"
+}
+
+### Chiamata delete per cancellare un libro
+DELETE {{url}}/5

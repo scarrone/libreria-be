@@ -22,4 +22,16 @@ public class LibroService {
         repository.saveAll(l);
     }
 
+    public void addLibro(Libro l){
+        repository.save(l);
+    }
+
+    public void updateLibro(Libro l){
+        repository.save(l);
+    }
+
+    public void deleteLibro(Long id) {
+        repository.deleteById(id);
+    }
+    
 }
