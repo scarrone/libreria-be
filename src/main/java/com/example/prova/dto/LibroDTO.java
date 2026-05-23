@@ -8,9 +8,11 @@ import lombok.Setter;
 public class LibroDTO {
     private String title;
 
-    private String author;
+    private Long authorId;
 
     private String genre;
 
     private Integer publicationYear;
+
+    private String isbn;
 }

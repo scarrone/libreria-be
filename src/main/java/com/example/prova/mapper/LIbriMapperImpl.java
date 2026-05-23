@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.prova.dto.LibroDTO;
 import com.example.prova.entities.Libro;
+import com.example.prova.exception.ResourceNotFoundException;
 
 import jakarta.annotation.Nullable;
 
@@ -19,10 +20,16 @@ public class LIbriMapperImpl implements LibriMapper {
             return null;
         }
 
+        if(libro.getAuthor() == null) {
+            throw new ResourceNotFoundException("Autore del libro non trovato");
+        }
+
         LibroDTO libroDTO = new LibroDTO();
         libroDTO.setTitle(libro.getTitle());
-        libroDTO.setAuthor(libro.getAuthor());
+        libroDTO.setAuthorId(libro.getAuthor().getId());
+        libroDTO.setGenre(libro.getGenre());
         libroDTO.setPublicationYear(libro.getPublicationYear());
+        libroDTO.setIsbn(libro.getIsbn());
         return libroDTO;
     }
 
@@ -35,8 +42,10 @@ public class LIbriMapperImpl implements LibriMapper {
         Libro libro = new Libro();
         libro.setId(id);
         libro.setTitle(libroDTO.getTitle());
-        libro.setAuthor(libroDTO.getAuthor());
+        libro.getAuthor().setId(libroDTO.getAuthorId());
+        libro.setGenre(libroDTO.getGenre());
         libro.setPublicationYear(libroDTO.getPublicationYear());
+        libro.setIsbn(libroDTO.getIsbn());
         return libro;
     }
 

@@ -1,6 +1,8 @@
 package com.example.prova.entities;
 
-import org.hibernate.annotations.Check;
+import java.sql.Date;
+
+import org.hibernate.annotations.Collate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,30 +18,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "libri")
-@Getter
-@Setter
+@Table(name = "prestiti")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Libro{
+@Getter
+@Setter
+public class Prestito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titolo")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "utente_id")
+    private Utente utente;
 
     @ManyToOne
-    @JoinColumn(name = "autore_id")
-    private Autore author;
+    @JoinColumn(name = "libro_id")
+    private Libro libro;
 
-    @Column(name = "genere", length = 100)
-    private String genre;
+    @Column(name = "data_prestito", nullable = false)
+    private Date dataPrestito;
 
-    @Column(name = "anno_pubblicazione")
-    private Integer publicationYear;
+    @Column(name = "data_scadenza", nullable = false)
+    private Date dataScadenza;
 
-    @Column(name = "isbn", unique = true, nullable = false)
-    @Check(constraints = "LENGTH(isbn) = 13")
-    private String isbn;
+    @Column(name = "data_restituzione", nullable = true)
+    private Date dataRestituzione;
 }

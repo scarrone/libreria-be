@@ -3,6 +3,8 @@ package com.example.prova.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,36 +16,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.prova.dto.LibroDTO;
-import com.example.prova.entities.Libro;
 import com.example.prova.services.LibroService;
+
+import jakarta.validation.constraints.Size;
 
 
 @RestController
-@RequestMapping("/api/libri")
+@RequestMapping("/api/libro")
+@Validated
 @CrossOrigin("http://localhost:4200/")
 public class LibriController {
     
     @Autowired
     private LibroService service;
 
-    @GetMapping({"", "/"})
-    public List<LibroDTO> findLibri() {
-        return service.getLibri();
+    @GetMapping("")
+    public ResponseEntity<List<LibroDTO>> findLibri() {
+        return ResponseEntity.ok(service.getLibri());
     }
 
-    @PostMapping({"", "/"})
-    public void addLibri(@RequestBody List<LibroDTO> l) {
-        service.addLibri(l);
+    @PostMapping("")
+    public ResponseEntity<LibroDTO> addLibro(@RequestBody LibroDTO l) {
+        return ResponseEntity.ok(service.addLibro(l));
     }
 
-    @PatchMapping("/{id}")
-    public void updateLibro(@PathVariable("id") Long id, @RequestBody LibroDTO l) {
-        service.updateLibro(l, id);
+    @PatchMapping("/{isbn}")
+    public ResponseEntity<LibroDTO> updateLibro(@PathVariable("isbn") String isbn, @RequestBody LibroDTO l) {
+        return ResponseEntity.ok(service.updateLibro(l, isbn));
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteLIbro(@PathVariable("id") Long id){
-        service.deleteLibro(id);
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<String> deleteLIbro(@PathVariable("isbn") @Size(min = 13, max = 13, message = "L'ISBN deve essere composto da 13 caratteri") String isbn){
+        return ResponseEntity.ok(service.deleteLibroByIsbn(isbn));
     }
     
 }
+    
