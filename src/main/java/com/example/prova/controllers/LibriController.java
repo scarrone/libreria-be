@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.prova.dto.LibroDTO;
 import com.example.prova.entities.Libro;
 import com.example.prova.services.LibroService;
 
@@ -26,21 +27,18 @@ public class LibriController {
     private LibroService service;
 
     @GetMapping({"", "/"})
-    public List<Libro> findLibri() {
+    public List<LibroDTO> findLibri() {
         return service.getLibri();
     }
 
     @PostMapping({"", "/"})
-    public void addLibri(@RequestBody List<Libro> l) {
+    public void addLibri(@RequestBody List<LibroDTO> l) {
         service.addLibri(l);
     }
 
     @PatchMapping("/{id}")
-    public void updateLibro(@PathVariable("id") Long id, @RequestBody Libro l) {
-        if(id != null){
-            l.setId(id);
-        }
-        service.updateLibro(l);
+    public void updateLibro(@PathVariable("id") Long id, @RequestBody LibroDTO l) {
+        service.updateLibro(l, id);
     }
 
     @DeleteMapping("/{id}")

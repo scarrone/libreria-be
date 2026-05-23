@@ -1,5 +1,7 @@
 package com.example.prova.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,21 +13,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "libri")
+@Table(name = "autori")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Libro{
+@AllArgsConstructor
+public class Autore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String title;
-
-    private String author;
-
-    private String genre;
-
-    private Integer publicationYear;
+    private String nome;
+    private String cognome;
+    private Date dataNascita;
+    private String nazionalita;
 }

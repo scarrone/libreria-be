@@ -1,43 +1,43 @@
-### Variabili (opzionali)
-@url = http://localhost:8080/api/libri
+  ### Variabili (opzionali)
+  @url = http://localhost:8080/api/libri
 
-### Chiamata GET per verificare
-GET {{url}}
+  ### Chiamata GET per verificare
+  GET {{url}}
 
-### Chiamata POST per creare un libro
-POST {{url}}
-Content-Type: application/json
+  ### Chiamata POST per creare un libro
+  POST {{url}}
+  Content-Type: application/json
 
-[
-{
-  "title": "Il Nome della Rosa",
-  "author": "Umberto Eco",
-  "genre": "Storico",
-  "isRead": true
-},
-{
-  "title": "Il Nome della Margherita",
-  "author": "Umberto Eco",
-  "genre": "Storico",
-  "isRead": true
-},
-{
-  "title": "Il Nome della Viola",
-  "author": "Umberto Eco",
-  "genre": "Storico",
-  "isRead": false
-}
-]
+  [
+  {
+    "title": "Il Nome della Rosa",
+    "author": "Umberto Eco",
+    "genre": "Storico",
+    "isRead": true
+  },
+  {
+    "title": "Il Nome della Margherita",
+    "author": "Umberto Eco",
+    "genre": "Storico",
+    "isRead": true
+  },
+  {
+    "title": "Il Nome della Viola",
+    "author": "Umberto Eco",
+    "genre": "Storico",
+    "isRead": false
+  }
+  ]
 
-### Chiamata patch per modificare un libro
-PATCH {{url}}/1
-Content-Type: application/json
+  ### Chiamata patch per modificare un libro
+  PATCH {{url}}/1
+  Content-Type: application/json
 
-{
-  "title": "Il Nome della Santa",
-  "author": "Patrizio Eco",
-  "genre": "Fantasy"
-}
+  {
+    "title": "Il Nome della Santa",
+    "author": "Patrizio Eco",
+    "genre": "Fantasy"
+  }
 
-### Chiamata delete per cancellare un libro
-DELETE {{url}}/5
+  ### Chiamata delete per cancellare un libro
+  DELETE {{url}}/5
