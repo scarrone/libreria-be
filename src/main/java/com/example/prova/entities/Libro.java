@@ -26,7 +26,7 @@ public class Libro{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titolo")
+    @Column(name = "titolo", length = 120, nullable = false)
     private String title;
 
     @ManyToOne
@@ -36,7 +36,7 @@ public class Libro{
     @Column(name = "genere", length = 100)
     private String genre;
 
-    @Column(name = "anno_pubblicazione")
+    @Column(name = "anno_pubblicazione", nullable = false)
     private Integer publicationYear;
 
     @Column(name = "isbn", unique = true, nullable = false)

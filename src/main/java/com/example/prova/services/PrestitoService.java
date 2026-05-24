@@ -1,18 +1,18 @@
             package com.example.prova.services;
 
-            import com.example.prova.repositories.PrestitiRepository;
+            import java.sql.Date;
+import java.util.List;
 
-        import java.sql.Date;
-        import java.util.List;
+import org.springframework.stereotype.Service;
 
-            import org.springframework.beans.factory.annotation.Autowired;
-            import org.springframework.stereotype.Service;
-
-            import com.example.prova.dto.PrestitoDTO;
-            import com.example.prova.entities.Prestito;
-            import com.example.prova.exception.ResourceNotFoundException;
-            import com.example.prova.mapper.PrestitiMapper;
-            import com.example.prova.repositories.UtentiRepository;
+import com.example.prova.dto.PrestitoDTO;
+import com.example.prova.entities.Libro;
+import com.example.prova.entities.Prestito;
+import com.example.prova.entities.Utente;
+import com.example.prova.exception.ResourceNotFoundException;
+import com.example.prova.mapper.PrestitiMapper;
+import com.example.prova.repositories.PrestitiRepository;
+import com.example.prova.repositories.UtentiRepository;
 
             @Service
             public class PrestitoService {
@@ -33,10 +33,25 @@
                 }
                 
                 public Prestito createPrestito(PrestitoDTO prestitoDTO) {
-                libroService.getLibroByIsbn(prestitoDTO.getLibroIsbn());
-                utentiRepository.findById(prestitoDTO.getUtenteId()).orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
+                Libro libro = libroService.getLibroByIsbn(prestitoDTO.getLibroIsbn());
+                Utente utente =utentiRepository.findById(prestitoDTO.getUtenteId()).orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
-                    return prestitiMapper.toEntity(prestitoDTO, null);
+                Prestito prestito = prestitiMapper.toEntity(prestitoDTO, null);
+                prestito.setLibro(libro);
+                prestito.setUtente(utente);
+                if(prestitoDTO.getDataPrestito() == null){
+                    prestito.setDataPrestito(new Date(System.currentTimeMillis()));
+                }else{
+                    prestito.setDataPrestito(prestitoDTO.getDataPrestito());
+                }
+                
+                if(prestitoDTO.getDataScadenza() == null){
+                    prestito.setDataScadenza(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000));
+                }else{
+                    prestito.setDataScadenza(prestitoDTO.getDataScadenza());
+                }
+
+                    return prestitiRepository.save(prestito);
                 }
 
                 public List<Prestito> getPrestiti() {
@@ -48,7 +63,7 @@
                     return prestitiRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Prestito non trovato"));
                 }
 
-                public void updatePrestito(Date dataScadenza, Date dataRestituzione, Long id) {
+                public Prestito updatePrestito(Date dataScadenza, Date dataRestituzione, Long id) {
 
                     if(id == null) {
                         throw new IllegalArgumentException("Indicare l'id del prestito da aggiornare");
@@ -62,7 +77,7 @@
                         prestito.setDataScadenza(dataScadenza);
                     }
 
-                    prestitiRepository.save(prestito);
+                    return prestitiRepository.save(prestito);
                 }
 
                 public void deletePrestito(Long id) {

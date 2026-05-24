@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.example.prova.dto.LibroDTO;
+import com.example.prova.entities.Autore;
 import com.example.prova.entities.Libro;
 import com.example.prova.exception.ResourceNotFoundException;
 
@@ -40,6 +41,7 @@ public class LIbriMapperImpl implements LibriMapper {
         }
 
         Libro libro = new Libro();
+        libro.setAuthor(new Autore());
         libro.setId(id);
         libro.setTitle(libroDTO.getTitle());
         libro.getAuthor().setId(libroDTO.getAuthorId());
